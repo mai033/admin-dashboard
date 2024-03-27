@@ -21,7 +21,7 @@ import {
   dataProduct,
   dataTransaction,
   dataOverallStat,
-  dataAffiliateStat
+  dataAffiliateStat,
 } from './data/index.js';
 import OverallStat from './models/OverallStat.js';
 import AffiliateStat from './models/AffiliateStat.js';
@@ -42,10 +42,16 @@ app.use('/management', managementRoutes);
 app.use('/sales', salesRoutes);
 
 const PORT = process.env.PORT || 9000;
+const DOMAIN_NAME = process.env.DOMAIN_NAME;
+
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => {
-    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+    app.listen(PORT, () => {
+      console.log(`Server running on port: ${PORT}`);
+      console.log(`Accessible at: https://${DOMAIN_NAME}`); // Log the domain name
+    });
+
     // OverallStat.insertMany(dataOverallStat);
     // User.insertMany(dataUser)
     // Product.insertMany(dataProduct);
